@@ -16,8 +16,8 @@ contract ERC721{
     event ApprovalForAll(address indexed owner, address indexed operator, bool approval);
     
     bytes4 internal constant ERC721_RECEIVED = bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));
-    bytes4 private constant _INTERFACE_ID_ERC721 = 0x80ac58cd;
-    bytes4 private constant _INTERFACE_ID_ERC165 = 0x01ffc9a7;
+    bytes4 internal constant _INTERFACE_ID_ERC721 = 0x80ac58cd;
+    bytes4 internal constant _INTERFACE_ID_ERC165 = 0x01ffc9a7;
 
     function balanceOf(address owner) public view returns (uint256){
         require(owner != address(0), "Address zero!");
@@ -68,7 +68,7 @@ contract ERC721{
         safeTransferFrom(_from, _to, _tokenId, "");
     }
 
-    function supportsInterface(bytes4 _interfaceId) external pure returns (bool){
+    function supportsInterface(bytes4 _interfaceId) external virtual pure returns (bool){
         return ( _interfaceId == _INTERFACE_ID_ERC721 || _interfaceId == _INTERFACE_ID_ERC165);
     }
 
@@ -76,6 +76,10 @@ contract ERC721{
         balances[_from] --;
         balances[_to] ++;
         tokenOwner[_tokenId] = _to;
+    }
+
+    function getTokenOwner(uint _tokenId) public view returns(address){
+        return tokenOwner[_tokenId];
     }
 
     function _checkERC721Receiver(address _from, address _to, uint _tokenId, bytes memory _data) internal returns(bool){

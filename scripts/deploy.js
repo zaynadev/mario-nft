@@ -8,12 +8,22 @@ const { ethers } = require("hardhat");
 require('dotenv').config();
 
 async function main(){
-  const SuperMario = await ethers.getContractFactory("SuperMario");
-  const superMario = await SuperMario.deploy("SuperMario", "SUPM");
+  const SuperMario = await ethers.getContractFactory("SuperMarioERC1155");
+  const superMario = await SuperMario.deploy("SuperMarioOZ", "SUPMC","https://ipfs.io/ipfs/Qmb6tWBDLd9j2oSnvSNhE314WFL7SRpQNtfwjFWsStXp5A/");
   await superMario.deployed();
   console.log("SuperMario contract address: ", superMario.address);
-  await superMario.mint("https://ipfs.io/ipfs/QmZ3Xxs7pXwSM33ggxAMrMoMi1kWxA64aY2GKZDaFDTrQW");
-}
+  await superMario.mint(10);
+  await superMario.mint(10);
+  await superMario.mint(10);
+  await superMario.mint(10);
+  await superMario.mint(10);
+  await superMario.mint(10);
+  await superMario.mint(10);
+  await superMario.mint(10);
+  console.log("NFT Successfully minted");
+
+
+} 
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
